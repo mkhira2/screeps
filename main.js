@@ -44,35 +44,47 @@ module.exports.loop = function () {
     var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
     var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
 
-    var name = undefined;
-
     // if not enough harvesters
     if (numberOfHarvesters < minimumNumberOfHarvesters) {
         // try to spawn one
-        name = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], undefined,
-            { role: 'harvester', working: false });
+        var name = `Harvester${Game.time}`
+        var spawnAttempt = Game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], name,
+            { memory: { role: 'harvester', working: false } });
+        // print name to console if spawning was a success
+        if (spawnAttempt === OK) {
+            console.log(`Spawning new creep: ${name}`)
+        }
     }
     // if not enough upgraders
     else if (numberOfUpgraders < minimumNumberOfUpgraders) {
         // try to spawn one
-        name = Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, MOVE], undefined,
-            { role: 'upgrader', working: false });
+        var name = `Upgrader${Game.time}`
+        var spawnAttempt = Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, MOVE], name,
+            { memory: { role: 'upgrader', working: false } });
+        // print name to console if spawning was a success
+        if (spawnAttempt === OK) {
+            console.log(`Spawning new creep: ${name}`)
+        }
     }
     // if not enough builders
     else if (numberOfBuilders < minimumNumberOfBuilders) {
         // try to spawn one
-        name = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], undefined,
-            { role: 'builder', working: false });
+        var name = `Builder${Game.time}`
+        var spawnAttempt = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], name,
+            { memory: { role: 'builder', working: false } });
+        // print name to console if spawning was a success
+        if (spawnAttempt === OK) {
+            console.log(`Spawning new creep: ${name}`)
+        }
     }
     else {
         // else try to spawn a builder
-        name = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], undefined,
-            { role: 'builder', working: false });
-    }
-
-    // print name to console if spawning was a success
-    // name > 0 would not work since string > 0 returns false
-    if (!(name < 0)) {
-        console.log("Spawned new creep: " + name);
+        var name = `Builder${Game.time}`
+        var spawnAttempt = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], name,
+            { memory: { role: 'builder', working: false } });
+        // print name to console if spawning was a success
+        if (spawnAttempt === OK) {
+            console.log(`Spawning new creep: ${name}`)
+        }
     }
 };
