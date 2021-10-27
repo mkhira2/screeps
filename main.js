@@ -2,6 +2,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleRepairer = require('role.repairer');
 
 module.exports.loop = function () {
     // check for memory entries of died creeps by iterating over Memory.creeps
@@ -30,12 +31,17 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
+        // if creep is repairer, call repairer script
+        else if (creep.memory.role == 'repairer') {
+            roleRepairer.run(creep);
+        }
     }
 
     // setup some minimum numbers for different roles
     var minimumNumberOfHarvesters = 10;
     var minimumNumberOfUpgraders = 1;
     var minimumNumberOfBuilders = 1;
+    var minimumNumberOfRepairers = 2;
 
     // count the number of creeps alive for each role
     // _.sum will count the number of properties in Game.creeps filtered by the
@@ -43,6 +49,7 @@ module.exports.loop = function () {
     var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
     var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
     var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
+    var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
 
     // if not enough harvesters
     if (numberOfHarvesters < minimumNumberOfHarvesters) {
@@ -61,6 +68,17 @@ module.exports.loop = function () {
         var name = `Upgrader${Game.time}`
         var spawnAttempt = Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, MOVE], name,
             { memory: { role: 'upgrader', working: false } });
+        // print name to console if spawning was a success
+        if (spawnAttempt === OK) {
+            console.log(`Spawning new creep: ${name}`)
+        }
+    }
+    // if not enough repairers
+    else if (numberOfRepairers < minimumNumberOfRepairers) {
+        // try to spawn one
+        var name = `Repairer${Game.time}`
+        var spawnAttempt = Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], name,
+            { memory: { role: 'repairer', working: false } });
         // print name to console if spawning was a success
         if (spawnAttempt === OK) {
             console.log(`Spawning new creep: ${name}`)
