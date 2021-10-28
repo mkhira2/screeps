@@ -56,7 +56,7 @@ module.exports.loop = function () {
     var minimumNumberOfUpgraders = 1;
     var minimumNumberOfBuilders = 1;
     var minimumNumberOfRepairers = 1;
-    var minimumNumberOfWallRepairers = 1;
+    var minimumNumberOfWallRepairers = 5;
 
     // number of creeps alive for each role
     var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
@@ -90,7 +90,8 @@ module.exports.loop = function () {
     // if not enough builders, try to spawn one
     else if (numberOfBuilders < minimumNumberOfBuilders) {
         Game.spawns.Spawn1.spawnCustomCreep(energy, 'builder');
-    } // if not enough wallRepairers, try to spawn one
+    }
+    // if not enough wallRepairers, try to spawn one
     else if (numberOfWallRepairers < minimumNumberOfWallRepairers) {
         Game.spawns.Spawn1.spawnCustomCreep(energy, 'wallRepairer');
     }
