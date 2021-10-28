@@ -1,5 +1,4 @@
 module.exports = {
-    // a function to run the logic for this role
     run: function (creep) {
         // if creep is bringing energy to the controller but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
@@ -14,9 +13,6 @@ module.exports = {
 
         // if creep is supposed to transfer energy to the controller
         if (creep.memory.working == true) {
-            // instead of upgraderController we could also use:
-            // if (creep.transfer(creep.room.controller, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-
             // try to upgrade the controller
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 // if not in range, move towards the controller
