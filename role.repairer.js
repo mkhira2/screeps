@@ -16,8 +16,8 @@ module.exports = {
         // if creep is supposed to repair something
         if (creep.memory.working == true) {
             // find closest structure with less than max hits
-            // Exclude walls because they have way too many max hits and would keep
-            // our repairers busy forever. We have to find a solution for that later.
+            // Exclude walls because we have wallRepairer roles specifically for that
+            // due to walls higher than average amount of hit points
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL
             });
