@@ -16,7 +16,9 @@ module.exports = {
         if (creep.memory.working == true) {
             // find closest spawn or extension which is not full
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                filter: (s) => s.energy < s.energyCapacity
+                filter: (s) => (s.structureType === STRUCTURE_SPAWN
+                    || s.structureType === STRUCTURE_EXTENSION)
+                    && s.energy < s.energyCapacity
             });
 
             // if we found one
