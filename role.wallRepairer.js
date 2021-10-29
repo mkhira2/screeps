@@ -20,7 +20,7 @@ module.exports = {
                 filter: (s) => s.structureType == STRUCTURE_WALL
             });
 
-            const target = undefined;
+            let target = undefined;
 
             // loop with increasing percentages
             for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
