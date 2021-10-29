@@ -1,5 +1,5 @@
 module.exports = {
-    run: function (creep) {
+    run: (creep) => {
         // if creep is bringing energy to a structure but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
@@ -16,7 +16,7 @@ module.exports = {
             // if in home room
             if (creep.room.name === creep.memory.home) {
                 // find closest spawn, extension, or tower which is not full
-                var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                const structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                     filter: (s) => (s.structureType === STRUCTURE_SPAWN
                         || s.structureType === STRUCTURE_EXTENSION
                         || s.structureType === STRUCTURE_TOWER)
@@ -35,7 +35,7 @@ module.exports = {
             // if not in home room...
             else {
                 // find exit to home room
-                var exit = creep.room.findExitTo(creep.memory.home);
+                const exit = creep.room.findExitTo(creep.memory.home);
                 // move to exit
                 creep.moveTo(creep.pos.findClosestByRange(exit));
             }
@@ -45,7 +45,7 @@ module.exports = {
             // if in target room
             if (creep.room.name === creep.memory.target) {
                 // find source
-                var source = creep.room.find(FIND_SOURCES)[creep.memory.sourceIndex];
+                const source = creep.room.find(FIND_SOURCES)[creep.memory.sourceIndex];
                 // try to harvest energy, if the source is not in range
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     // move towards the source
@@ -55,7 +55,7 @@ module.exports = {
             // if not in target room
             else {
                 // find exit to target room
-                var exit = creep.room.findExitTo(creep.memory.target);
+                const exit = creep.room.findExitTo(creep.memory.target);
                 // move to exit
                 creep.moveTo(creep.pos.findClosestByRange(exit));
             }

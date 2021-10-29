@@ -1,5 +1,5 @@
 module.exports = {
-    run: function (creep) {
+    run: (creep) => {
         // if creep is bringing energy to the controller but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
@@ -22,7 +22,7 @@ module.exports = {
         // if creep is supposed to harvest energy from source
         else {
             // find closest source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+            const source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
             // try to harvest energy, if the source is not in range
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 // move towards the source

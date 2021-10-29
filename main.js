@@ -1,15 +1,15 @@
 // import modules
 require('prototype.spawn')();
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleRepairer = require('role.repairer');
-var roleWallRepairer = require('role.wallRepairer');
-var roleLongDistanceHarvester = require('role.longDistanceHarvester');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const roleRepairer = require('role.repairer');
+const roleWallRepairer = require('role.wallRepairer');
+const roleLongDistanceHarvester = require('role.longDistanceHarvester');
 
-var HOME = 'W42S24'
+const HOME = 'W42S24'
 
-module.exports.loop = function () {
+module.exports.loop = () => {
     // check for memory entries of dead creeps
     for (let name in Memory.creeps) {
         // and check if the creep is still alive
@@ -22,7 +22,7 @@ module.exports.loop = function () {
     // for every creep name in Game.creeps
     for (let name in Game.creeps) {
         // get the creep object
-        var creep = Game.creeps[name];
+        const creep = Game.creeps[name];
 
         // call script that corresponds to role
         if (creep.memory.role === 'harvester') {
@@ -45,48 +45,47 @@ module.exports.loop = function () {
         }
     }
     // get all towers in room
-    var towers = Game.rooms[HOME].find(FIND_STRUCTURES, {
+    const towers = Game.rooms[HOME].find(FIND_STRUCTURES, {
         filter: (s) => s.structureType === STRUCTURE_TOWER
     });
 
     // for each tower, attack enemy if one is nearby
     for (let tower of towers) {
-        var target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        const target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (target != undefined) {
             tower.attack(target);
         }
     }
 
     // minimum numbers for different roles
-    var minimumNumberOfHarvesters = 1;
-    var minimumNumberOfUpgraders = 1;
-    var minimumNumberOfBuilders = 1;
-    var minimumNumberOfRepairers = 1;
-    var minimumNumberOfWallRepairers = 1;
-    var minimumNumberOfLongDistanceHarvestersW42S23 = 1;
-    var minimumNumberOfLongDistanceHarvestersW42S25 = 1;
+    const minimumNumberOfHarvesters = 1;
+    const minimumNumberOfUpgraders = 1;
+    const minimumNumberOfBuilders = 1;
+    const minimumNumberOfRepairers = 1;
+    const minimumNumberOfWallRepairers = 1;
+    const minimumNumberOfLongDistanceHarvestersW42S23 = 1;
+    const minimumNumberOfLongDistanceHarvestersW42S25 = 1;
 
     // number of creeps alive for each role
-    var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
-    var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
-    var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
-    var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
-    var numberOfWallRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
-    var numberOfLongDistanceHarvestersW42S23 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target === 'W42S23');
-    var numberOfLongDistanceHarvestersW42S25 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target === 'W42S25');
+    const numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
+    const numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
+    const numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
+    const numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
+    const numberOfWallRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
+    const numberOfLongDistanceHarvestersW42S23 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target === 'W42S23');
+    const numberOfLongDistanceHarvestersW42S25 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target === 'W42S25');
 
-
-    var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
+    const energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
 
     // if not enough harvesters
     if (numberOfHarvesters < minimumNumberOfHarvesters) {
         // try to spawn one
-        var spawnAttempt = Game.spawns.Spawn1.spawnCustomCreep(energy, 'harvester');
+        const spawnAttempt = Game.spawns.Spawn1.spawnCustomCreep(energy, 'harvester');
 
         // if spawning failed and we have no harvesters left
         if (spawnAttempt === ERR_NOT_ENOUGH_ENERGY && numberOfHarvesters === 0) {
             // spawn one with what is available
-            var spawnAttempt = Game.spawns.Spawn1.spawnCustomCreep(
+            Game.spawns.Spawn1.spawnCustomCreep(
                 Game.spawns.Spawn1.room.energyAvailable, 'harvester');
         }
     }

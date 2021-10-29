@@ -1,7 +1,7 @@
-var roleBuilder = require('role.builder');
+const roleBuilder = require('role.builder');
 
 module.exports = {
-    run: function (creep) {
+    run: (creep) => {
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
@@ -16,11 +16,11 @@ module.exports = {
         // if creep is supposed to repair something
         if (creep.memory.working == true) {
             // find all walls in the room
-            var walls = creep.room.find(FIND_STRUCTURES, {
+            const walls = creep.room.find(FIND_STRUCTURES, {
                 filter: (s) => s.structureType == STRUCTURE_WALL
             });
 
-            var target = undefined;
+            const target = undefined;
 
             // loop with increasing percentages
             for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
@@ -55,7 +55,7 @@ module.exports = {
         // if creep is supposed to harvest energy from source
         else {
             // find closest source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE, {
+            const source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE, {
                 filter: (s) => s.energy > 0
             });
             // try to harvest energy, if the source is not in range
